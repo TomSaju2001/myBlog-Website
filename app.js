@@ -14,28 +14,45 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static("public"));
 
-app.get("/", function(request, response){
-  response.render("home", {homeStartingContent: homeStartingContent});
+let posts = [];
+
+app.get("/", function(request, response) {
+  response.render("home", {
+    homeStartingContent: homeStartingContent,
+    posts: posts
+  });
 });
 
-app.get("/about", function(request, response){
-  response.render("about", {aboutContent: aboutContent});
+app.get("/about", function(request, response) {
+  response.render("about", {
+    aboutContent: aboutContent
+  });
 });
 
-app.get("/contact", function(request, response){
-  response.render("contact", {contactContent: contactContent});
+app.get("/contact", function(request, response) {
+  response.render("contact", {
+    contactContent: contactContent
+  });
 });
 
-app.get("/compose", function(request, response){
+app.get("/compose", function(request, response) {
   response.render("compose");
 });
 
-app.post("/compose", function(request, response){
-  console.log(request.body.postTitle);
-  response.redirect("/compose");
+app.post("/compose", function(request, response) {
+
+  const post = {
+    title: request.body.postTitle,
+    body: request.body.postBody
+  };
+
+  posts.push(post);
+  response.redirect("/");
 });
 
 app.listen(3000, function() {

@@ -21,6 +21,8 @@ app.use(express.static("public"));
 
 let posts = [];
 
+// *********************GET*****************************
+
 app.get("/", function(request, response) {
   response.render("home", {
     homeStartingContent: homeStartingContent,
@@ -43,6 +45,12 @@ app.get("/contact", function(request, response) {
 app.get("/compose", function(request, response) {
   response.render("compose");
 });
+
+app.get("/posts/:postName", function(request, response){
+  console.log(request.params.postName);
+});
+
+// *********************POST*****************************
 
 app.post("/compose", function(request, response) {
 

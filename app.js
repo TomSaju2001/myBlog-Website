@@ -52,7 +52,10 @@ app.get("/posts/:postName", function(request, response){
 
   posts.forEach(function(post){
     if(_.lowerCase(requestedTitle) === _.lowerCase(post.title)){
-      console.log("Match Found!");
+      response.render("post", {
+        postTitle: post.title,
+        postBody: post.body
+      });
     }else{
       console.log("No Match Found!");
     }
